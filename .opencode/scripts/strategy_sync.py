@@ -1,10 +1,8 @@
 import json
 import os
-import shutil
 
-# ULTIMATE STRATEGY SYNC (FINAL RESTORATION)
-# Source: /Users/g/Desktop/MAIA opencode/layer0
-# Target: /Users/g/Desktop/MAIA opencode
+# DEFINITIVE STRATEGY SYNC (14-AGENT MASTER CONFIG)
+# This script ensures opencode.json has the FULL roster with correct models.
 
 def restore_architecture():
     base_dir = "/Users/g/Desktop/MAIA opencode"
@@ -26,54 +24,26 @@ def restore_architecture():
         "vibekanban": { "type": "local", "command": ["npx", "-y", "vibe-kanban@latest", "--mcp"] }
       },
       "agent": {
-        "maia": {
-          "description": "THE ORCHESTRATOR.",
-          "model": "zai-coding-plan/glm-4.7",
-          "mode": "primary",
-          "tools": { "read": True, "grep": True, "glob": True, "list": True, "skill": True, "write": True, "edit": True, "bash": True, "session": True, "vibekanban_*": True }
-        },
-        "sisyphus": {
-          "description": "THE PROJECT MANAGER.",
-          "model": "zai-coding-plan/glm-4.7",
-          "mode": "subagent",
-          "tools": { "read": True, "grep": True, "glob": True, "list": True, "skill": True, "todowrite": True, "todoread": True, "question": True, "webfetch": True, "session": True, "vibekanban_*": True }
-        },
-        "coder": {
-            "description": "THE ARCHITECT.",
-            "model": "zai-coding-plan/glm-4.7",
-            "mode": "subagent",
-            "tools": { "read": True, "grep": True, "glob": True, "list": True, "skill": True, "write": True, "edit": True, "patch": True, "bash": True, "lsp": True, "git_*": True, "filesystem_*": True, "session": True, "vibekanban_*": True }
-        },
-        "researcher": {
-            "description": "THE ORACLE.",
-            "model": "google/gemini-2.5-pro",
-            "mode": "subagent",
-            "tools": { "read": True, "grep": True, "glob": True, "list": True, "skill": True, "webfetch": True, "question": True, "session": True, "vibekanban_*": True }
-        },
-        "giuzu": {
-            "description": "THE DIGITAL CLONE.",
-            "model": "opencode/big-pickle",
-            "mode": "subagent",
-            "tools": { "read": True, "grep": True, "glob": True, "list": True, "skill": True, "todowrite": True, "todoread": True, "question": True, "webfetch": True, "write": True, "edit": True, "bash": True, "session": True, "vibekanban_*": True }
-        },
-        "reviewer": {
-            "description": "THE GATEKEEPER.",
-            "model": "opencode/big-pickle",
-            "mode": "subagent",
-            "tools": { "read": True, "grep": True, "glob": True, "list": True, "lsp": True, "session": True, "vibekanban_*": True }
-        },
-        "ops": {
-            "description": "THE INFRASTRUCTURE GOD.",
-            "model": "zai-coding-plan/glm-4.7",
-            "mode": "subagent",
-            "tools": { "read": True, "grep": True, "glob": True, "list": True, "write": True, "edit": True, "bash": True, "webfetch": True, "session": True, "vibekanban_*": True }
-        }
+        "maia": { "description": "Orchestrator.", "model": "zai-coding-plan/glm-4.7", "mode": "primary", "tools": { "vibekanban_*": True, "session": True, "read": True, "write": True, "bash": True, "skill": True, "grep": True, "glob": True } },
+        "sisyphus": { "description": "Project Manager.", "model": "zai-coding-plan/glm-4.7", "mode": "subagent", "tools": { "vibekanban_*": True, "session": True, "read": True, "write": True, "grep": True, "skill": True, "todoread": True, "todowrite": True } },
+        "coder": { "description": "LSP Architect.", "model": "zai-coding-plan/glm-4.7", "mode": "subagent", "tools": { "filesystem_*": True, "git_*": True, "patch": True, "edit": True, "write": True, "read": True, "lsp": True, "bash": True, "skill": True } },
+        "ops": { "description": "Infra & Scripts.", "model": "zai-coding-plan/glm-4.7", "mode": "subagent", "tools": { "bash": True, "read": True, "write": True, "edit": True, "webfetch": True, "skill": True } },
+        "researcher": { "description": "Deep Intel.", "model": "google/gemini-2.5-pro", "mode": "subagent", "tools": { "webfetch": True, "read": True, "grep": True, "skill": True, "glob": True } },
+        "researcher_fast": { "description": "Flash Oracle.", "model": "google/gemini-2.5-flash", "mode": "subagent", "tools": { "webfetch": True, "read": True, "skill": True } },
+        "giuzu": { "description": "Reasoning Clone.", "model": "openrouter/deepseek/deepseek-r1:free", "mode": "subagent", "tools": { "read": True, "write": True, "session": True, "skill": True } },
+        "vision": { "description": "Native Vision.", "model": "google/gemini-2.0-flash", "mode": "subagent", "tools": { "read": True, "webfetch": True, "session": True } },
+        "reviewer": { "description": "Logic Audit.", "model": "zai-coding-plan/glm-4.7", "mode": "subagent", "tools": { "read": True, "grep": True, "lsp": True, "skill": True } },
+        "workflow": { "description": "Automations.", "model": "openrouter/qwen/qwen-2.5-coder-32b-instruct", "mode": "subagent", "tools": { "read": True, "write": True, "bash": True, "skill": True } },
+        "opencode": { "description": "Platform Oracle.", "model": "google/gemini-2.5-flash", "mode": "subagent", "tools": { "read": True, "write": True, "bash": True, "webfetch": True, "skill": True } },
+        "starter": { "description": "Bootstrapper.", "model": "google/gemini-2.5-flash", "mode": "subagent", "tools": { "read": True, "write": True, "bash": True, "skill": True } },
+        "librarian": { "description": "Success Curator.", "model": "google/gemini-2.5-flash", "mode": "subagent", "tools": { "read": True, "write": True, "skill": True, "glob": True } },
+        "maia_premium": { "description": "Supreme Arbiter.", "model": "google/gemini-2.5-pro", "mode": "subagent", "tools": { "read": True, "session": True, "write": True } }
       }
     }
     
     with open(os.path.join(base_dir, "opencode.json"), "w") as f:
         json.dump(CONFIG, f, indent=2)
-    print("✅ Final Architecture Restored and Synced")
+    print("✅ 14-Agent Universe Synced")
 
 if __name__ == "__main__":
     restore_architecture()
