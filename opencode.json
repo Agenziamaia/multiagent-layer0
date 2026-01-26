@@ -1,0 +1,238 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "maia",
+  "model": "zai-coding-plan/glm-4.7",
+  "permission": {
+    "edit": "allow",
+    "bash": "allow",
+    "write": "allow",
+    "webfetch": "allow"
+  },
+  "provider": {
+    "zai-coding-plan": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Z.ai Paid Coding Plan (Zai Key)",
+      "options": {
+        "baseURL": "https://api.z.ai/api/coding/paas/v4",
+        "apiKey": "env:ZAI_API_KEY"
+      }
+    },
+    "google": {
+      "npm": "@ai-sdk/google",
+      "name": "Gemini Engine (Google Key)",
+      "options": {
+        "apiKey": "env:GEMINI_API_KEY"
+      },
+      "models": {
+        "gemini-2.0-flash": {
+          "name": "Gemini 2.0 Flash"
+        },
+        "gemini-1.5-pro": {
+          "name": "Gemini 1.5 Pro"
+        }
+      }
+    },
+    "opencode": {
+      "name": "OpenCode Models (Native)",
+      "options": {
+        "apiKey": "env:GEMINI_API_KEY"
+      },
+      "models": {
+        "big-pickle": {
+          "name": "Big Pickle"
+        },
+        "gpt-5-nano": {
+          "name": "GPT-5 Nano"
+        }
+      }
+    },
+    "openrouter": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "OpenRouter Global",
+      "options": {
+        "baseURL": "https://openrouter.ai/api/v1",
+        "apiKey": "env:OPENROUTER_API_KEY"
+      }
+    }
+  },
+  "mcp": {
+    "filesystem": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "."
+      ]
+    },
+    "git": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-git"
+      ]
+    },
+    "vibekanban": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "vibe-kanban@latest",
+        "--mcp"
+      ]
+    }
+  },
+  "agent": {
+    "maia": {
+      "description": "THE SINGULAR ORCHESTRATOR. High-level strategy and technical vision. Commands @coder, @ops, and @giuzu.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "primary",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "skill": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "session": true,
+        "vibekanban_*": true
+      }
+    },
+    "coder": {
+      "description": "THE ARCHITECT. Production creating agent.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "skill": true,
+        "write": true,
+        "edit": true,
+        "patch": true,
+        "bash": true,
+        "lsp": true,
+        "git_*": true,
+        "filesystem_*": true,
+        "session": true,
+        "vibekanban_*": true
+      }
+    },
+    "ops": {
+      "description": "THE INFRASTRUCTURE GOD. System deployment and stability.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "webfetch": true,
+        "session": true,
+        "vibekanban_*": true
+      }
+    },
+    "giuzu": {
+      "description": "THE DIGITAL CLONE. Personality and deduction specialist.",
+      "model": "opencode/big-pickle",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "skill": true,
+        "todowrite": true,
+        "todoread": true,
+        "question": true,
+        "webfetch": true,
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "session": true,
+        "vibekanban_*": true
+      }
+    },
+    "sisyphus": {
+      "description": "THE PROJECT MANAGER. Workflow automation and project coordination. Commands @researcher, @librarian, and @reviewer.",
+      "model": "zai-coding-plan/glm-4.7",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "skill": true,
+        "todowrite": true,
+        "todoread": true,
+        "question": true,
+        "webfetch": true,
+        "session": true,
+        "vibekanban_*": true
+      }
+    },
+    "researcher": {
+      "description": "THE ORACLE. Deep intelligence gathering and context synthesis.",
+      "model": "google/gemini-2.0-flash",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "skill": true,
+        "webfetch": true,
+        "question": true,
+        "session": true,
+        "vibekanban_*": true
+      }
+    },
+    "librarian": {
+      "description": "THE ARCHIVIST. Knowledge retrieval and indexing.",
+      "model": "google/gemini-1.5-pro",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "webfetch": true,
+        "session": true,
+        "vibekanban_*": true
+      }
+    },
+    "reviewer": {
+      "description": "THE GATEKEEPER. Logic audit and quality control.",
+      "model": "opencode/big-pickle",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "lsp": true,
+        "session": true,
+        "vibekanban_*": true
+      }
+    },
+    "explore": {
+      "description": "THE SCOUT. Rapid structural discovery.",
+      "model": "opencode/gpt-5-nano",
+      "mode": "subagent",
+      "tools": {
+        "read": true,
+        "grep": true,
+        "glob": true,
+        "list": true,
+        "vibekanban_*": true
+      }
+    }
+  }
+}

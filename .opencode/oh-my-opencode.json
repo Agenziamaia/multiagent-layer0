@@ -1,0 +1,60 @@
+{
+  "sisyphus": {
+    "model": "zai-coding-plan/glm-4.7",
+    "todoBinding": true,
+    "contextAwareness": "full"
+  },
+  "agents": {
+    "frontend": "coder",
+    "librarian": "researcher",
+    "oracle": "reviewer",
+    "explore": "ops"
+  },
+  "mcp": {
+    "websearch": {
+      "type": "remote",
+      "url": "https://api.exa.ai/mcp",
+      "enabled": false
+    },
+    "context7": {
+      "type": "local",
+      "command": ["npx", "-y", "@context7/mcp-server"],
+      "enabled": false
+    },
+    "vibe_kanban": {
+      "type": "local",
+      "command": ["npx", "-y", "vibe-kanban@latest", "--mcp"],
+      "enabled": true,
+      "description": "Multi-agent task orchestration with visual kanban board"
+    }
+  },
+  "sessionTools": {
+    "session_list": true,
+    "session_read": true,
+    "session_search": true,
+    "session_info": true
+  },
+  "kanban": {
+    "enabled": true,
+    "columns": ["todo", "in_progress", "in_review", "done"],
+    "autoCreateProject": true,
+    "conflictPrevention": {
+      "worktreeIsolation": true,
+      "maxConcurrentTasks": 5,
+      "statusValidation": true
+    },
+    "connection": {
+      "host": "localhost",
+      "port": 62601,
+      "verified": true,
+      "lastCheck": "2026-01-22T15:25:38Z"
+    },
+    "currentProject": {
+      "id": "b7a06d11-3600-447f-8dbd-617b0de52e67",
+      "name": "Multi-Agent Layer 0 v2",
+      "url": "http://localhost:62601",
+      "repo_id": "83f5c192-5a44-42e2-acc8-eae7e699ab95",
+      "base_branch": "main"
+    }
+  }
+}
